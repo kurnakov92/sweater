@@ -1,7 +1,7 @@
 package com.kurnakov.sweater.controller;
 
 import com.kurnakov.sweater.domain.Message;
-import com.kurnakov.sweater.service.MessageService;
+import com.kurnakov.sweater.repository.MessageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,7 +14,7 @@ import java.util.Map;
 public class MainController {
 
     @Autowired
-    private MessageService messageService;
+    private MessageRepository messageRepository;
 
     @GetMapping("/")
     public String greeting(Map<String, Object> model) {
@@ -23,7 +23,7 @@ public class MainController {
 
     @GetMapping("/main")
     public String main(Map<String, Object> model) {
-        Iterable<Message> messages = messageService.findAll();
+        Iterable<Message> messages = messageRepository.findAll();
         model.put("messages", messages);
         return "main";
     }
@@ -31,8 +31,8 @@ public class MainController {
     @PostMapping("/main")
     public String add(@RequestParam String text, @RequestParam String tag, Map<String, Object> model) {
         Message message = new Message(text, tag);
-        messageService.save(message);
-        Iterable<Message> messages = messageService.findAll();
+        messageRepository.save(message);
+        Iterable<Message> messages = messageRepository.findAll();
         model.put("messages", messages);
         return "main";
     }
@@ -41,9 +41,9 @@ public class MainController {
     public String filter(@RequestParam String filter, Map<String, Object> model) {
         Iterable<Message> messages;
         if (filter != null && !filter.isEmpty()) {
-            messages = messageService.findByTag(filter);
+            messages = messageRepository.findByTag(filter);
         } else {
-            messages = messageService.findAll();
+            messages = messageRepository.findAll();
         }
         model.put("messages", messages);
         return "main";

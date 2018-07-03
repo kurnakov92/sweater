@@ -4,7 +4,6 @@ import com.kurnakov.sweater.domain.Role;
 import com.kurnakov.sweater.domain.User;
 import com.kurnakov.sweater.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
